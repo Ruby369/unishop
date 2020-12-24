@@ -1,49 +1,53 @@
 <template>
-	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view>
-			<text class="title">{{title}}</text>
-		</view>
-	</view>
+  <view class="index">
+    <swiper
+      class="swiper"
+      :indicator-dots="indicatorDots"
+      :autoplay="autoplay"
+      :interval="interval"
+      :duration="duration"
+    >
+      <swiper-item v-for="item in swipers" :key="item.goods_id">
+        <image :src="item.image_src" mode="" />
+      </swiper-item>
+    </swiper>
+  </view>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				title: 'Hello'
-			}
-		},
-		onLoad() {
-
-		},
-		methods: {
-
-		}
-	}
+export default {
+  data() {
+    return {
+      swipers: [],
+      indicatorDots: true,
+      autoplay: true,
+      interval: 2000,
+      duration: 500,
+    };
+  },
+  onLoad() {
+    this.getSwipers();
+  },
+  methods: {
+    getSwipers() {
+      this.$request({
+        url: "/home/swiperdata",
+      }).then((res) => {
+        console.log(res);
+        this.swipers = res.message;
+      });
+    },
+  },
+};
 </script>
 
-<style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin: 200rpx auto 50rpx auto;
-	}
-
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
-
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
-	}
+<style lang="scss">
+.swiper {
+  width: 750rpx;
+  height: 380rpx;
+  image {
+    height: 100%;
+    width: 100%;
+  }
+}
 </style>
