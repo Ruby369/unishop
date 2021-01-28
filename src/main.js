@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App'
-import {request} from './util/api.js'
+import {request} from './util/request.js'
 
 Vue.prototype.$request = request
 

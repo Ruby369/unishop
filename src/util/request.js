@@ -1,4 +1,4 @@
-const BASE_URL = 'https://api-hmugo-web.itheima.net/api/public/v1'
+const BASE_URL = 'http://152.136.185.210:8000/api/w6'
 export function request(options) {
   return new Promise((resolve, reject) => {
     uni.request({
@@ -6,7 +6,7 @@ export function request(options) {
       method: options.method || 'get',
       data: options.data || {},
       success: (res) => {
-        if (res.data.meta.status != 200) {
+        if (res.statusCode != 200) {
           return uni.showToast({
             title: '获取数据失败'
           });
