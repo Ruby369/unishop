@@ -1,6 +1,7 @@
 <template>
   <view>
     <goods-list :goods="goodsitem"></goods-list>
+    <view class="isOver" v-if="flag">-----我是有底线的-----</view>
   </view>
 </template>
 
@@ -10,14 +11,16 @@ import GoodsList from "../../components/goods-list/goods-list";
 export default {
   components: { GoodsList },
   data: () => ({
-    goodsitem: {},
-    page:1
+    goodsitem: [],
+    page:1,
+    flag:false
   }),
   computed: {},
   methods: {
     getGoodsItem() {
       getGoodsItem(this.page).then((res) => {
-        this.goodsitem = res.data.list;
+        this.goodsitem.push(...res.data.list);
+        this.page += 1;
       });
     },
   },
@@ -41,7 +44,8 @@ export default {
   },
   // 页面处理函数--监听用户上拉触底
   onReachBottom() {
-
+    // console.log('触底了');
+    this.getGoodsItem();
   },
   // 页面处理函数--监听页面滚动(not-nvue)
   /* onPageScroll(event) {}, */
@@ -52,6 +56,14 @@ export default {
 
 <style>
 .goods_list{
-  background: #eee;
+  background-color: #eee;
+}
+.isOver{
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  font-size: 28rpx;
+  background-color: #eee;
 }
 </style>
